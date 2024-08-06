@@ -464,6 +464,11 @@ public class Notifee {
 
     intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
 
+    // Security https://developer.android.com/about/versions/14/behavior-changes-14#safer-intents
+    // Android 34+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+      intent.setPackage(getContext().getPackageName());
+    }
     activity.runOnUiThread(() -> getContext().startActivity(intent));
     result.onComplete(null, null);
   }
